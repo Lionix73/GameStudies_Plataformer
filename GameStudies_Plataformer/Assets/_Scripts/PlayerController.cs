@@ -11,8 +11,10 @@ namespace TarodevController
     /// If you hve any questions or would like to brag about your score, come to discord: https://discord.gg/tarodev
     /// </summary>
     [RequireComponent(typeof(Rigidbody2D), typeof(Collider2D))]
+
     public class PlayerController : MonoBehaviour, IPlayerController
     {
+        [SerializeField] Timer timer;
         [SerializeField] private ScriptableStats _stats;
         private Rigidbody2D _rb;
         private CapsuleCollider2D _col;
@@ -63,6 +65,23 @@ namespace TarodevController
             {
                 _jumpToConsume = true;
                 _timeJumpWasPressed = _time;
+            }
+        }
+
+        private void OnTriggerStay2D(Collider2D collision)
+        {
+            if(collision.CompareTag("Refugio"))
+            {
+                timer.remainingTime = timer.starterTime;
+                timer.timerText.enabled = false;
+            }
+        }
+
+        private void OnTriggerExit2D(Collider2D collision)
+        {
+            if (collision.CompareTag("Refugio"))
+            {
+                timer.timerText.enabled = true;
             }
         }
 
@@ -209,4 +228,6 @@ namespace TarodevController
         public event Action Jumped;
         public Vector2 FrameInput { get; }
     }
+
+    
 }
