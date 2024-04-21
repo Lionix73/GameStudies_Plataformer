@@ -2,14 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Lever : MonoBehaviour
+public class LeverGates : MonoBehaviour
 {
     [System.Serializable]
+
     public class GateData
     {
         public GameObject gate;
+
+        [Tooltip("Este valor debe ser Negativo")]
         public float openVelocity;
+
+        [Tooltip("Este valor debe ser Positivo")]
         public float closeVelocity;
+
         [HideInInspector] public bool closed = true;
     }
 
@@ -17,38 +23,30 @@ public class Lever : MonoBehaviour
     [SerializeField] private float timeBetweenActions = 2f;
 
     private bool isInRange = false;
-    private bool leverActivated = false;
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E) && isInRange && !leverActivated)
+        if (Input.GetKeyDown(KeyCode.E) && isInRange)
         {
-            leverActivated = true;
-            StartCoroutine(PerformLeverActions());
+            LeverAction();
         }
     }
 
-    private IEnumerator PerformLeverActions()
-    {
-        while (true)
+    private void LeverAction(){
+        foreach (var gateData in gates)
         {
-            foreach (var gateData in gates)
+            Rigidbody2D rb = gateData.gate.GetComponent<Rigidbody2D>();
+
+            if (gateData.closed)
             {
-                Rigidbody2D rb = gateData.gate.GetComponent<Rigidbody2D>();
-
-                if (gateData.closed)
-                {
-                    rb.gravityScale = gateData.openVelocity;
-                    gateData.closed = false;
-                }
-                else
-                {
-                    rb.gravityScale = gateData.closeVelocity;
-                    gateData.closed = true;
-                }
+                rb.gravityScale = gateData.openVelocity;
+                gateData.closed = false;
             }
-
-            yield return new WaitForSeconds(timeBetweenActions);
+            else
+            {
+                rb.gravityScale = gateData.closeVelocity;
+                gateData.closed = true;
+            }
         }
     }
 
