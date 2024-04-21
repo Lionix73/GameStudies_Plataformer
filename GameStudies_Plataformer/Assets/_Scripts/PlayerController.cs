@@ -28,6 +28,15 @@ namespace TarodevController
         public event Action<bool, float> GroundedChanged;
         public event Action Jumped;
 
+
+        //para el agarre de objetos
+
+        [SerializeField] private float _grabRange = 1.5f; // distancia maxima en la que puede agarrar un obj
+        private GameObject _grabbedObject; 
+        private Vector2 _grabOffset; // desplazamiento del objeto 
+        private Rigidbody2D _grabbedRigidbody; // Rigidbody del objeto agarrado
+
+
         #endregion
 
         private float _time;
@@ -44,6 +53,8 @@ namespace TarodevController
         {
             _time += Time.deltaTime;
             GatherInput();
+
+            HandleObjectGrab(); 
         }
 
         private void GatherInput()
@@ -70,7 +81,7 @@ namespace TarodevController
 
         private void OnTriggerStay2D(Collider2D collision)
         {
-            if(collision.CompareTag("Refugio"))
+            if (collision.CompareTag("Refugio"))
             {
                 timer.remainingTime = timer.starterTime;
                 timer.timerText.enabled = false;
@@ -92,12 +103,12 @@ namespace TarodevController
             HandleJump();
             HandleDirection();
             HandleGravity();
-            
+
             ApplyMovement();
         }
 
         #region Collisions
-        
+
         private float _frameLeftGrounded = float.MinValue;
         private bool _grounded;
 
@@ -206,6 +217,41 @@ namespace TarodevController
 
         private void ApplyMovement() => _rb.velocity = _frameVelocity;
 
+        private void HandleObjectGrab()
+        {
+            if (Input.GetKeyDown(KeyCode.Q) && _grabbedObject == null) // Si se presiona la tecla Q y no hay objeto agarrado
+            {
+                Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, _grabRange);
+
+                foreach (Collider2D collider in colliders)
+                {
+                    if (collider.CompareTag("Draggable"))
+                    {
+                        _grabbedObject = collider.gameObject;
+                        _grabOffset = _grabbedObject.transform.position - transform.position;
+                        _grabbedRigidbody = _grabbedObject.GetComponent<Rigidbody2D>();
+                        break;
+                    }
+                }
+            }
+
+            if (_grabbedObject != null)
+            {
+                // Esto mueve el objeto agarrado con el jugador
+                _grabbedObject.transform.position = (Vector2)transform.position + _grabOffset;
+
+                float horizontalInput = Input.GetAxis("Horizontal");
+                _grabbedRigidbody.velocity = new Vector2(horizontalInput * _stats.MaxSpeed, _grabbedRigidbody.velocity.y);
+            }
+
+            if (Input.GetKeyUp(KeyCode.Q) && _grabbedObject != null) // Si se suelta la tecla Q y hay un objeto agarrado
+            {
+                _grabbedObject = null; // Suelta el objeto
+                _grabOffset = Vector2.zero;
+                _grabbedRigidbody = null;
+            }
+        }
+
 #if UNITY_EDITOR
         private void OnValidate()
         {
@@ -229,5 +275,4 @@ namespace TarodevController
         public Vector2 FrameInput { get; }
     }
 
-    
 }

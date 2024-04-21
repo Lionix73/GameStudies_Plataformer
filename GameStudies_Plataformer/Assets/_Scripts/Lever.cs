@@ -1,46 +1,66 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Net.NetworkInformation;
 using UnityEngine;
 
 public class Lever : MonoBehaviour
 {
-    [SerializeField] private GameObject gate;
-    [SerializeField] private float openVelocity;
-    [SerializeField] private float closeVelocity;
-
-
-    private Rigidbody2D rb;
-    private bool closed;
-    private bool isInRange = false;
-
-    void Start(){
-        rb = gate.GetComponent<Rigidbody2D>();
+    [System.Serializable]
+    public class GateData
+    {
+        public GameObject gate;
+        public float openVelocity;
+        public float closeVelocity;
+        [HideInInspector] public bool closed = true;
     }
 
-    void Update(){
-        if (Input.GetKeyDown(KeyCode.E) && isInRange){
+    [SerializeField] private List<GateData> gates = new List<GateData>();
+    [SerializeField] private float timeBetweenActions = 2f;
 
-            if (closed){
-                rb.gravityScale = openVelocity;
-                closed = false;
+    private bool isInRange = false;
+    private bool leverActivated = false;
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.E) && isInRange && !leverActivated)
+        {
+            leverActivated = true;
+            StartCoroutine(PerformLeverActions());
+        }
+    }
+
+    private IEnumerator PerformLeverActions()
+    {
+        while (true)
+        {
+            foreach (var gateData in gates)
+            {
+                Rigidbody2D rb = gateData.gate.GetComponent<Rigidbody2D>();
+
+                if (gateData.closed)
+                {
+                    rb.gravityScale = gateData.openVelocity;
+                    gateData.closed = false;
+                }
+                else
+                {
+                    rb.gravityScale = gateData.closeVelocity;
+                    gateData.closed = true;
+                }
             }
-            else{
-                rb.gravityScale = closeVelocity;
-                closed = true;
-            }
+
+            yield return new WaitForSeconds(timeBetweenActions);
         }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         isInRange = true;
-        Debug.Log("Player In Range");
+        UnityEngine.Debug.Log("Player In Range");
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
         isInRange = false;
-        Debug.Log("Player Is NOT Range");
+        UnityEngine.Debug.Log("Player Is NOT Range");
     }
 }
