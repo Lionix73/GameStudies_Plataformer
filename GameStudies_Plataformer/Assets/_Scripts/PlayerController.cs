@@ -47,6 +47,9 @@ namespace TarodevController
             _rb = GetComponent<Rigidbody2D>();
             _col = GetComponent<CapsuleCollider2D>();
 
+            _stats.MaxSpeed = 14f;
+            _stats.JumpPower = 34f;
+
             _cachedQueryStartInColliders = Physics2D.queriesStartInColliders;
         }
 
