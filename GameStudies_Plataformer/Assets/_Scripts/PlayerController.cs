@@ -19,7 +19,7 @@ namespace TarodevController
         private Rigidbody2D _rb;
         private CapsuleCollider2D _col;
         private FrameInput _frameInput;
-        public Vector2 _frameVelocity;
+        [HideInInspector] public Vector2 _frameVelocity;
         private bool _cachedQueryStartInColliders;
 
         #region Interface
@@ -47,7 +47,7 @@ namespace TarodevController
             _rb = GetComponent<Rigidbody2D>();
             _col = GetComponent<CapsuleCollider2D>();
 
-            _stats.MaxSpeed = 14f;
+            _stats.MaxSpeed = 10f;
             _stats.JumpPower = 34f;
 
             _cachedQueryStartInColliders = Physics2D.queriesStartInColliders;
