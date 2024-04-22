@@ -15,11 +15,11 @@ namespace TarodevController
     public class PlayerController : MonoBehaviour, IPlayerController
     {
         [SerializeField] Timer timer;
-        [SerializeField] private ScriptableStats _stats;
+        [SerializeField] public ScriptableStats _stats;
         private Rigidbody2D _rb;
         private CapsuleCollider2D _col;
         private FrameInput _frameInput;
-        private Vector2 _frameVelocity;
+        public Vector2 _frameVelocity;
         private bool _cachedQueryStartInColliders;
 
         #region Interface
@@ -29,13 +29,14 @@ namespace TarodevController
         public event Action Jumped;
 
 
+        /*
         //para el agarre de objetos
 
         [SerializeField] private float _grabRange = 1.5f; // distancia maxima en la que puede agarrar un obj
         private GameObject _grabbedObject; 
         private Vector2 _grabOffset; // desplazamiento del objeto 
         private Rigidbody2D _grabbedRigidbody; // Rigidbody del objeto agarrado
-
+        */
 
         #endregion
 
@@ -54,7 +55,7 @@ namespace TarodevController
             _time += Time.deltaTime;
             GatherInput();
 
-            HandleObjectGrab(); 
+            //HandleObjectGrab(); 
         }
 
         private void GatherInput()
@@ -166,6 +167,7 @@ namespace TarodevController
             if (_grounded || CanUseCoyote) ExecuteJump();
 
             _jumpToConsume = false;
+
         }
 
         private void ExecuteJump()
@@ -217,9 +219,10 @@ namespace TarodevController
 
         private void ApplyMovement() => _rb.velocity = _frameVelocity;
 
+        /*
         private void HandleObjectGrab()
         {
-            if (Input.GetKeyDown(KeyCode.Q) && _grabbedObject == null) // Si se presiona la tecla Q y no hay objeto agarrado
+            if (Input.GetKey(KeyCode.Q) && _grabbedObject == null) // Si se presiona la tecla Q y no hay objeto agarrado
             {
                 Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, _grabRange);
 
@@ -231,6 +234,7 @@ namespace TarodevController
                         _grabOffset = _grabbedObject.transform.position - transform.position;
                         _grabbedRigidbody = _grabbedObject.GetComponent<Rigidbody2D>();
                         break;
+                        
                     }
                 }
             }
@@ -251,6 +255,7 @@ namespace TarodevController
                 _grabbedRigidbody = null;
             }
         }
+        */
 
 #if UNITY_EDITOR
         private void OnValidate()
