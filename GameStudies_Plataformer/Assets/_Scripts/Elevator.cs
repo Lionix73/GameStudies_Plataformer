@@ -9,7 +9,6 @@ public class Elevator : MonoBehaviour
     [SerializeField] private Transform upperPos;
     [SerializeField] private GameObject player;
     [SerializeField] private float speed;
-    [SerializeField] private bool horizontal;
 
     private bool isElevatorDown;
     private bool isInRange = false;
@@ -27,23 +26,12 @@ public class Elevator : MonoBehaviour
     void StartElevator(){
         if (isInRange && Input.GetKeyDown(KeyCode.E)){
 
-            if (horizontal){
-                if (Vector2.Distance(platform.transform.position, downPos.transform.position) < 0.5f){
-                    isElevatorDown = true;
-                }
-
-                if (Vector2.Distance(platform.transform.position, upperPos.transform.position) < 0.5f){
-                    isElevatorDown = false;
-                }
+            if (Vector2.Distance(platform.transform.position, downPos.transform.position) < 0.5f){
+                isElevatorDown = true;
             }
-            else{
-                if (platform.transform.position.y <= downPos.position.y){
-                    isElevatorDown = true;
-                }
 
-                if (platform.transform.position.y >= upperPos.position.y){
-                    isElevatorDown = false;
-                }
+            if (Vector2.Distance(platform.transform.position, upperPos.transform.position) < 0.5f){
+                isElevatorDown = false;
             }
         }
 

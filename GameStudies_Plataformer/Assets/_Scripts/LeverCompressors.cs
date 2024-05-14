@@ -21,12 +21,18 @@ public class LeverCompressors : MonoBehaviour
 
     [SerializeField] private List<GateData> gates = new List<GateData>();
     [SerializeField] private float timeBetweenActions = 2f;
+    [SerializeField] private bool automatic = false;
 
     private bool isInRange = false;
     private bool leverActivated = false;
 
     private void Update()
     {
+        if (automatic && !leverActivated){
+            leverActivated = true;
+            StartCoroutine(PerformLeverActions());
+        }
+
         if (Input.GetKeyDown(KeyCode.E) && isInRange && !leverActivated)
         {
             leverActivated = true;
