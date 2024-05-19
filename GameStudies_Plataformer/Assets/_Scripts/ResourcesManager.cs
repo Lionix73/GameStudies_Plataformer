@@ -10,6 +10,7 @@ public class ResourcesManager : MonoBehaviour
     [SerializeField] private Image[] scraps;
     [SerializeField] private Sprite colorScrap;
     [SerializeField] private Sprite grayScrap;
+    [SerializeField] Timer timer;
 
     void Start(){
         scrap = 0;
@@ -24,6 +25,23 @@ public class ResourcesManager : MonoBehaviour
         for (int i = 0; i < scrap; i++)
         {
             scraps[i].sprite = colorScrap;
+        }
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            timer.remainingTime = timer.starterTime;
+            timer.timerText.enabled = false;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            timer.timerText.enabled = true;
         }
     }
 }

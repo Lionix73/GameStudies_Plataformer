@@ -14,7 +14,6 @@ namespace TarodevController
 
     public class PlayerController : MonoBehaviour, IPlayerController
     {
-        [SerializeField] Timer timer;
         [SerializeField] public ScriptableStats _stats;
         private Rigidbody2D _rb;
         private CapsuleCollider2D _col;
@@ -80,23 +79,6 @@ namespace TarodevController
             {
                 _jumpToConsume = true;
                 _timeJumpWasPressed = _time;
-            }
-        }
-
-        private void OnTriggerStay2D(Collider2D collision)
-        {
-            if (collision.CompareTag("Refugio"))
-            {
-                timer.remainingTime = timer.starterTime;
-                timer.timerText.enabled = false;
-            }
-        }
-
-        private void OnTriggerExit2D(Collider2D collision)
-        {
-            if (collision.CompareTag("Refugio"))
-            {
-                timer.timerText.enabled = true;
             }
         }
 
