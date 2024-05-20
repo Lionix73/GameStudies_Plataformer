@@ -42,6 +42,12 @@ public class ResourcesManager : MonoBehaviour
 
     void Update()
     {
+        if (scrap == 3)
+        {
+            fades.final = true;
+            fades.FadeToDay();
+        }
+
         foreach (Image image in scraps){
             image.sprite = grayScrap;
         }
@@ -58,11 +64,6 @@ public class ResourcesManager : MonoBehaviour
         for (int i = 0; i < life; i++)
         {
             lifes[i].sprite = colorLife;
-        }
-
-        if (scrap == 3){
-            fades.final = true;
-            fades.FadeToDay();
         }
     }
 
