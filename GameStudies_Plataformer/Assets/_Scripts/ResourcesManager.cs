@@ -29,11 +29,15 @@ public class ResourcesManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI diasText;
     [SerializeField] private Fades fades;
 
+    [Header("UI Elements")]
+    [SerializeField] private TextMeshPro interactText;  // mensaje interactivo
+
     void Start(){
         scrap = 0;
         life = 5;
         dia = 1;
         diasText.text = dia.ToString();
+        interactText.gameObject.SetActive(false); // esconde el texto inicialmente
     }
 
     void Update()
@@ -67,6 +71,7 @@ public class ResourcesManager : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             timer.paused = true;
+            interactText.gameObject.SetActive(true); // muestra el mensaje
 
             if (Input.GetKeyDown(KeyCode.E)){
 
@@ -94,6 +99,7 @@ public class ResourcesManager : MonoBehaviour
         if (collision.CompareTag("Player") && timer != null)
         {
             timer.paused = false;
+            interactText.gameObject.SetActive(false); //lo vuelve a esconder jujuju
         }
     }
 }
