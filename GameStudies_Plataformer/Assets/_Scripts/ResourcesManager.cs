@@ -27,6 +27,7 @@ public class ResourcesManager : MonoBehaviour
     [Header("Timer & Days")]
     [SerializeField] Timer timer;
     [SerializeField] private TextMeshProUGUI diasText;
+    [SerializeField] private Fades fades;
 
     void Start(){
         scrap = 0;
@@ -54,6 +55,11 @@ public class ResourcesManager : MonoBehaviour
         {
             lifes[i].sprite = colorLife;
         }
+
+        if (scrap == 3){
+            fades.final = true;
+            fades.FadeToDay();
+        }
     }
 
     private void OnTriggerStay2D(Collider2D collision)
@@ -66,10 +72,14 @@ public class ResourcesManager : MonoBehaviour
 
                 if (life != 0){
                     //Pasar Dia
+                    fades.FadeToDay();
+
                     dia = dia + 1;
                     diasText.text = dia.ToString();
 
                     life = life - 1;
+
+                    timer.remainingTime = 500;
                 }
                 else if (life <= 0){
                     //Morido
