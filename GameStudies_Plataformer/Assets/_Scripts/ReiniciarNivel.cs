@@ -7,7 +7,7 @@ public class ReiniciarNivel : MonoBehaviour
 {
     void OnTriggerEnter2D(Collider2D other){
         if (other.CompareTag("Player")){
-            SceneManager.LoadScene("Nivel");
+            other.transform.position = new Vector3(-17.09f,-1.92f,0f);
         }
     }
 }

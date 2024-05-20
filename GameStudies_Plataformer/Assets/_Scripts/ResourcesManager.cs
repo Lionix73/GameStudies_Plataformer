@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using Unity.VisualScripting;
 
 
 public class ResourcesManager : MonoBehaviour
@@ -81,7 +82,7 @@ public class ResourcesManager : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
+        if (collision.CompareTag("Player") && timer != null)
         {
             timer.timerText.enabled = true;
         }
