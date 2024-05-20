@@ -60,8 +60,7 @@ public class ResourcesManager : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            timer.remainingTime = timer.starterTime;
-            timer.timerText.enabled = false;
+            timer.paused = true;
 
             if (Input.GetKeyDown(KeyCode.E)){
 
@@ -84,7 +83,7 @@ public class ResourcesManager : MonoBehaviour
     {
         if (collision.CompareTag("Player") && timer != null)
         {
-            timer.timerText.enabled = true;
+            timer.paused = false;
         }
     }
 }

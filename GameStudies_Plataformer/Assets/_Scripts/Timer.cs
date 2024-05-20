@@ -9,6 +9,8 @@ public class Timer : MonoBehaviour
     [SerializeField] public float remainingTime;
     public float starterTime;
 
+    public bool paused;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -18,7 +20,7 @@ public class Timer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(remainingTime > 0)
+        if(remainingTime > 0 && paused == false)
         {
             remainingTime -= Time.deltaTime;
         }
