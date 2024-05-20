@@ -85,7 +85,7 @@ public class ResourcesManager : MonoBehaviour
 
                     life = life - 1;
 
-                    timer.remainingTime = 500;
+                    //timer.remainingTime += 30;
                 }
                 else if (life <= 0){
                     //Morido

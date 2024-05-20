@@ -9,6 +9,7 @@ public class Elevator : MonoBehaviour
     [SerializeField] private Transform upperPos;
     [SerializeField] private GameObject player;
     [SerializeField] private float speed;
+    [SerializeField] private AudioSource sound;
 
     private bool isElevatorDown;
     private bool isInRange = false;
@@ -25,6 +26,7 @@ public class Elevator : MonoBehaviour
 
     void StartElevator(){
         if (isInRange && Input.GetKeyDown(KeyCode.E)){
+            sound.Play();
 
             if (Vector2.Distance(platform.transform.position, downPos.transform.position) < 0.5f){
                 isElevatorDown = true;

@@ -21,6 +21,7 @@ public class LeverGates : MonoBehaviour
 
     [SerializeField] private List<GateData> gates = new List<GateData>();
     [SerializeField] private float timeBetweenActions = 2f;
+    [SerializeField] private AudioSource sound;
 
     private bool isInRange = false;
 
@@ -28,6 +29,8 @@ public class LeverGates : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.E) && isInRange)
         {
+            sound.Play();
+
             LeverAction();
         }
     }

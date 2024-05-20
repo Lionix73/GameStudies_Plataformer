@@ -2,31 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class Timer : MonoBehaviour
 {
     [SerializeField] public TextMeshProUGUI timerText;
     [SerializeField] public float remainingTime;
-    public float starterTime;
 
     public bool paused;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        starterTime = remainingTime;
-    }
-
-    // Update is called once per frame
     void Update()
     {
         if(remainingTime > 0 && paused == false)
         {
             remainingTime -= Time.deltaTime;
         }
-        else if(remainingTime < 0)
+        else if(remainingTime <= 0)
         {
             remainingTime = 0;
+            SceneManager.LoadScene(0);
         }
 
         int minutes = Mathf.FloorToInt(remainingTime / 60);
