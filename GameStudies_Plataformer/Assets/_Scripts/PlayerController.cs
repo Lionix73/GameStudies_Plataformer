@@ -15,6 +15,7 @@ namespace TarodevController
     public class PlayerController : MonoBehaviour, IPlayerController
     {
         [SerializeField] public ScriptableStats _stats;
+        [SerializeField] private GameObject map;
         private Rigidbody2D _rb;
         private CapsuleCollider2D _col;
         private FrameInput _frameInput;
@@ -27,7 +28,7 @@ namespace TarodevController
         public event Action<bool, float> GroundedChanged;
         public event Action Jumped;
 
-
+        private bool mapActive = false;
         /*
         //para el agarre de objetos
 
@@ -56,6 +57,15 @@ namespace TarodevController
         {
             _time += Time.deltaTime;
             GatherInput();
+
+            if (Input.GetKeyDown(KeyCode.M) && !mapActive){
+                map.SetActive(true);
+                mapActive = true;
+            }
+            else if (Input.GetKeyDown(KeyCode.M) && mapActive){
+                map.SetActive(false);
+                mapActive = false;
+            }
 
             //HandleObjectGrab(); 
         }
