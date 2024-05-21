@@ -24,6 +24,10 @@ public class ResourcesManager : MonoBehaviour
     [SerializeField] private Sprite colorLife;
     [SerializeField] private Sprite grayLife;
 
+    [Header("Gas")]
+    [SerializeField] private Gasolina gasolina;
+
+
     [Header("Timer & Days")]
     [SerializeField] Timer timer;
     [SerializeField] private TextMeshProUGUI diasText;
@@ -84,6 +88,11 @@ public class ResourcesManager : MonoBehaviour
                     diasText.text = dia.ToString();
 
                     life = life - 1;
+
+                    if (gasolina.gasAmount < gasolina.gasCap){
+                        gasolina.gasAmount = gasolina.gasAmount + 1;
+                        gasolina.UpdateGasAmountText();
+                    }
 
                     //timer.remainingTime += 30;
                 }

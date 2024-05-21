@@ -11,7 +11,9 @@ public class Gasolina : MonoBehaviour
 
     [SerializeField] Timer timer;
 
-    [SerializeField] private int gasAmount;
+    [SerializeField] public int gasAmount;
+
+    [SerializeField] public int gasCap;
 
     private void Start()
     {
@@ -36,5 +38,9 @@ public class Gasolina : MonoBehaviour
     private void OnTriggerExit2D(Collider2D collision)
     {
         instructions.SetActive(false);
+    }
+
+    public void UpdateGasAmountText(){
+        gasText.text = gasAmount.ToString();
     }
 }
