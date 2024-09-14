@@ -7,10 +7,13 @@ Rescuebot is a 2D puzzle platformer set in a post-apocalyptic world consumed by 
 - **Resource management with a risk/reward focus.** The harsh environment limits the player’s time, testing quick thinking and decision-making.
 - **Survival-based gameplay**, where the player must gather essential resources to continue.
 
+  *Note: A movement asset has been used in the development of this project. [2D Controller](https://github.com/Matthew-J-Spencer/Ultimate-2D-Controller)*
+
 ## Narrative:
 As Eclipse ventures deeper into the frozen world, its human operator, Emily, begins to question whether humanity is worth saving. Together, they face increasingly difficult challenges, leading to a final, desperate choice that could bring peace to the broken world.
 
-*Note: A movement asset has been used in the development of this project. [2D Controller](https://github.com/Matthew-J-Spencer/Ultimate-2D-Controller)*
+## Itch.Io
+[**Rescuebot Page**](https://lionix73.itch.io/rescuebot)
 
 ## Authors and Credits
 Created by 
